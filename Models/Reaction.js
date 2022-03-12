@@ -1,5 +1,6 @@
 const {Schema, Types } = require('mongoose');
 
+// Setting up Reaction Schema
 const reactionSchema = new Schema(
     {
         reactionId: {},
@@ -7,4 +8,6 @@ const reactionSchema = new Schema(
         username: {},
         createdAt: {}
     }
-)
+);
+
+module.exports = reactionSchema;
