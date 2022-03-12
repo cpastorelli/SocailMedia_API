@@ -5,7 +5,9 @@ const thoughtController = {
     getAllThoughts(req, res) {
         Thought.find()
         .sort()
-        .then()
+        .then((thoughtData) => {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -15,7 +17,9 @@ const thoughtController = {
     // GET One Thought
     getOneThought(req, res) {
         Thought.findOne()
-        .then()
+        .then((thoughtData) => {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(500);
             res.status(500)
@@ -25,7 +29,9 @@ const thoughtController = {
     // Create a New Thought
     makeNewThought(req, res) {
         Thought.create()
-        .then()
+        .then((thoughtData) => {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -35,7 +41,9 @@ const thoughtController = {
     // Update a Thought by ID
     updateThought(req, res) {
         Thought.findOneAndUpdate()
-        .then()
+        .then((thoughtData) => {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -45,7 +53,9 @@ const thoughtController = {
     // Delete a Thought by ID 
     forgetThought(req, res) {
         Thought.findOneAndRemove()
-        .then()
+        .then((thoughtData) => {
+            
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -55,7 +65,9 @@ const thoughtController = {
     // Create a new Reaction
     newReaction(req, res) {
         Thought.findOneAndUpdate()
-        .then()
+        .then((thoughtData) => {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -65,7 +77,9 @@ const thoughtController = {
     // Remove a Reaction
     removeReaction(req, res) {
         Thought.findOneAndUpdate()
-        .then()
+        .then((thoughtData)=> {
+            res.json(thoughtData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)

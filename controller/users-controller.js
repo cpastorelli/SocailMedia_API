@@ -4,7 +4,9 @@ const userController = {
     // GET all users
     getAllUsers(req, res) {
         User.find()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -14,7 +16,9 @@ const userController = {
     // GET One User
     getOneUser(req, res) {
         User.findOne()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -24,7 +28,9 @@ const userController = {
     // Create a new User
     makeNewUser(req, res) {
         User.create()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -34,7 +40,9 @@ const userController = {
     // Update a new User by ID
     updateUser(req, res) {
         User.findOneAndUpdate()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -44,7 +52,9 @@ const userController = {
     // Remove a User by ID
     removeUser(req, res) {
         User.FindOneAndDelete()
-        .then()
+        .then((userData) => {
+
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -54,7 +64,9 @@ const userController = {
     // Add a new Friend
     addFriend(req, res) {
         User.findOneAndUpdate()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
@@ -64,7 +76,9 @@ const userController = {
     // Remove a Friend
     removeFriend(req, res) {
         User.findOneAndUpdate()
-        .then()
+        .then((userData) => {
+            res.json(userData);
+        })
         .catch((err) => {
             console.log(err);
             res.status(500)
