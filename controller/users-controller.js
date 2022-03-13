@@ -15,7 +15,7 @@ const userController = {
     },
     // GET One User
     getOneUser(req, res) {
-        User.findOne()
+        User.findOne({ _id: req.params.userId })
         .then((userData) => {
             res.json(userData);
         })
@@ -39,7 +39,7 @@ const userController = {
     },
     // Update a new User by ID
     updateUser(req, res) {
-        User.findOneAndUpdate()
+        User.findOneAndUpdate({ _id: req.params.userId })
         .then((userData) => {
             res.json(userData);
         })
@@ -78,7 +78,7 @@ const userController = {
     },
     // Remove a Friend
     removeFriend(req, res) {
-        User.findOneAndUpdate()
+        User.findOneAndUpdate({ _id: req.params.userID })
         .then((userData) => {
             res.json(userData);
         })
