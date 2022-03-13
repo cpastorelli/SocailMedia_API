@@ -17,7 +17,13 @@ const userController = {
     // GET One User
     getOneUser(req, res) {
         User.findOne({ _id: req.params.userId })
+        .populate('friends')
+        .populate('thoughts')
         .then((userData) => {
+            if(!userData){
+                return res.status(404)
+                .json({ message: 'I am sorry. This user does not seem to exist!' });
+            }
             res.json(userData);
         })
         .catch((err) => {
@@ -42,8 +48,12 @@ const userController = {
 
     // Update a new User by ID
     updateUser(req, res) {
-        User.findOneAndUpdate({ _id: req.params.userId })
+        User.findOneAndUpdate({ _id: req.params.userId }, { $set: req.body }, { runValidators: true, new: true })
         .then((userData) => {
+            if(!userData) {
+                return res.status(404)
+                .json({ message: 'I am sorry. This user does not seem to exist!' });
+            }
             res.json(userData);
         })
         .catch((err) => {
@@ -55,13 +65,12 @@ const userController = {
 
     // Remove a User by ID
     removeUser(req, res) {
-        User.FindOneAndDelete({ _id: req.params.userId })
+        User.findOneAndDelete({ _id: req.params.userId })
         .then((userData) => {
             if(!userData) {
                 return res.status(404)
                 .json({ message: 'I am sorry. This user does not seem to exist!' });
             }
-
             res.status(200)
             .json({ message: 'User has successfully been deleted.' });
         })
@@ -74,8 +83,12 @@ const userController = {
 
     // Add a new Friend
     addFriend(req, res) {
-        User.findOneAndUpdate({ _id: req.params.userId })
+        User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { new: true})
         .then((userData) => {
+            if(!userData) {
+                return res.status(404)
+                .json({ message: 'I am sorry. This user does not seem to exist!' })
+            }
             res.json(userData);
         })
         .catch((err) => {
@@ -87,11 +100,11 @@ const userController = {
 
     // Remove a Friend
     removeFriend(req, res) {
-        User.FindOneAndDelete({ _id: req.params.userId })
+        User.FindOneAndDelete({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true })
         .then((userData) => {
             if(!userData) {
                 return res.status(404)
-                .json({ message: 'I am sorry. This friend does not seem to exist anymore!' });
+                .json({ message: 'I am sorry. This user does not seem to exist!' });
             }
             res.status(200)
             .json(userData);
