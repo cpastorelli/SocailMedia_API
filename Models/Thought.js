@@ -11,9 +11,7 @@ const thoughtSchema = new Schema(
             maxlength: 280
         },
         createdAt: {
-            type: Date,
-            default: Date.now,
-            get: timestamp => dateFormat(timestamp)
+
         },
         username: {
             type: String,
@@ -23,7 +21,7 @@ const thoughtSchema = new Schema(
     },
     {
         toJSON: {
-            getters: true
+            getters: true,
         },
         id: false
     }

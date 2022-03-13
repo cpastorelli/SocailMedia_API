@@ -34,12 +34,12 @@ const thoughtController = {
 
     // Create a New Thought
     makeNewThought(req, res) {
-        Thought.create()
-        .then((thoughtData) => {
-            return User.findOneAndUpdate({ _id: req.body.userId }, { $push: { thoughts: thoughtData._id } }, {new: true});
+        Thought.create(req.body)
+        .then(({_id}) => {
+            return User.findOneAndUpdate({ _id: req.body.userId }, { $push: { thoughts: _id } }, {new: true});
         })
-        .then((userData) => {
-            if(!userData) {
+        .then(({_id}) => {
+            if(!_id) {
                 return res.status(404)
                 .json({ message: 'I am sorry. This thought does not seem to exist!' });
             }
@@ -47,6 +47,8 @@ const thoughtController = {
             .json({ message: 'Thought has been created successfully!' });
         })
         .catch((err) => {
+            console.log(req.body.userId);
+            console.log(req.body.thoughtText);
             console.log(err);
             res.status(500)
             .json(err);
