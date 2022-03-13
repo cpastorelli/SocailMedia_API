@@ -4,11 +4,34 @@ const reactionSchema = require('./Reaction');
 // Setting up Thought Scema - Will need to use ReactionSchema
 const thoughtSchema = new Schema(
     {
-        thoughtText: {},
-        createdAt: {},
-        username: {},
-        reactions: []
+        thoughtText: {
+            type: String,
+            required: 'Thought can only be between 1-280 characters in length!',
+            minlength: 1,
+            maxlength: 280
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: timestamp => dateFormat(timestamp)
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        reactions: [ reactionSchema]
+    },
+    {
+        toJSON: {
+            getters: true
+        },
+        id: false
     }
 );
 
-module.exports = thoughtSchema;
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+});
+const Thought = model('Thought', thoughtSchema);
+
+module.exports = Thought;
