@@ -13,6 +13,7 @@ const userController = {
             .json(err);
         });
     },
+
     // GET One User
     getOneUser(req, res) {
         User.findOne({ _id: req.params.userId })
@@ -25,6 +26,7 @@ const userController = {
             .json(err);
         });
     },
+
     // Create a new User
     makeNewUser(req, res) {
         User.create()
@@ -37,6 +39,7 @@ const userController = {
             .json(err);
         });
     },
+
     // Update a new User by ID
     updateUser(req, res) {
         User.findOneAndUpdate({ _id: req.params.userId })
@@ -49,14 +52,18 @@ const userController = {
             .json(err);
         });
     },
+
     // Remove a User by ID
     removeUser(req, res) {
         User.FindOneAndDelete({ _id: req.params.userId })
         .then((userData) => {
             if(!userData) {
                 return res.status(404)
-                .json({ message: 'User not found' });
+                .json({ message: 'I am sorry. This user does not seem to exist!' });
             }
+
+            res.status(200)
+            .json({ message: 'User has successfully been deleted.' });
         })
         .catch((err) => {
             console.log(err);
@@ -64,6 +71,7 @@ const userController = {
             .json(err);
         });
     },
+
     // Add a new Friend
     addFriend(req, res) {
         User.findOneAndUpdate({ _id: req.params.userId })
@@ -76,11 +84,17 @@ const userController = {
             .json(err);
         });
     },
+
     // Remove a Friend
     removeFriend(req, res) {
-        User.findOneAndUpdate({ _id: req.params.userID })
+        User.FindOneAndDelete({ _id: req.params.userId })
         .then((userData) => {
-            res.json(userData);
+            if(!userData) {
+                return res.status(404)
+                .json({ message: 'I am sorry. This friend does not seem to exist anymore!' });
+            }
+            res.status(200)
+            .json(userData);
         })
         .catch((err) => {
             console.log(err);
