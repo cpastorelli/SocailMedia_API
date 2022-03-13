@@ -51,9 +51,12 @@ const userController = {
     },
     // Remove a User by ID
     removeUser(req, res) {
-        User.FindOneAndDelete()
+        User.FindOneAndDelete({ _id: req.params.userId })
         .then((userData) => {
-
+            if(!userData) {
+                return res.status(404)
+                .json({ message: 'User not found' });
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -63,7 +66,7 @@ const userController = {
     },
     // Add a new Friend
     addFriend(req, res) {
-        User.findOneAndUpdate()
+        User.findOneAndUpdate({ _id: req.params.userId })
         .then((userData) => {
             res.json(userData);
         })
