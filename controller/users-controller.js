@@ -100,7 +100,9 @@ const userController = {
 
     // Remove a Friend
     removeFriend(req, res) {
-        User.FindOneAndDelete({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true })
+        User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true })
+        .populate({ path: 'friends', select: '-__v' })
+        .select('-__v')
         .then((userData) => {
             if(!userData) {
                 return res.status(404)
@@ -110,6 +112,9 @@ const userController = {
             .json(userData);
         })
         .catch((err) => {
+            console.log(req.params.userId);
+            console.log(req.params.friendId);
+
             console.log(err);
             res.status(500)
             .json(err);
