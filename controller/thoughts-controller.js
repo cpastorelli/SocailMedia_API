@@ -93,7 +93,9 @@ const thoughtController = {
 
     // Create a new Reaction
     newReaction(req, res) {
-        Thought.findOneAndUpdate({ _id: req.params.thoughtId }, { $addToSet: { reactions: req.body }}, {runValidators: true, new: true })
+        Thought.findOneAndUpdate({ _id: req.params.thoughtId }, { $addToSet: { reactions: req.params.reactionId }}, {runValidators: true, new: true })
+        .populate({ path: 'reactions', select: '-__v' })
+        .select('-__v')
         .then((thoughtData) => {
             if(!thoughtData) {
                 return res.status(404)
